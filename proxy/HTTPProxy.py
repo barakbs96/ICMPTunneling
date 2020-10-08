@@ -3,7 +3,7 @@ import threading
 
 from network.ICMPSocket import ICMPSocket
 from proxy.IProxy import IProxy
-from tunnel.Tunnel import Tunnel
+from tunnel.basic_tunnel import BasicTunnel
 from config.proxy.httpproxy import HTTP_PROXY_HOST, HTTP_PROXY_PORT, MAX_REQ_SIZE, HTTP_PROXY_CLIENT_QUEUE,\
     HTTP_CONNECT_METHOD, HTTP_HOST_HEADER, HTTP_PROXY_CONNECT_MESSEGE
 
@@ -32,7 +32,7 @@ class HTTPProxy(IProxy):
         else:
             proxy_socket.send(data)
         tunnel = Tunnel(client, proxy_socket)
-        tunnel.start_tunneling()
+        tunnel.tunnel()
 
     def _setup_server_socket(self):
         server_socket = socket.socket()
