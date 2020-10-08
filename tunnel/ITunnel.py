@@ -22,7 +22,7 @@ class ITunnel(object):
         raise NotImplementedError
 
     @abstractmethod
-    def start_tunneling(self):
+    def tunnel(self):
         """
         Start tunneling.
 
