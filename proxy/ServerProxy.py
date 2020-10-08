@@ -4,7 +4,7 @@ import random
 from network.SecureICMPSocket import SecureICMPSocket
 from network.ICMPSocket import ICMPSocket
 from proxy.IProxy import IProxy
-from tunnel.Tunnel import Tunnel
+from tunnel.basic_tunnel import BasicTunnel
 from config.proxy.httpproxy import HTTP_PROXY_HOST, HTTP_PROXY_PORT, HTTP_PROXY_CLIENT_QUEUE
 from config.proxy.serverproxy import SERVER_PROXY_IP, SERVER_PROXY_PORT
 
@@ -23,4 +23,4 @@ class ServerProxy(IProxy):
             server = SecureICMPSocket(HTTP_PROXY_HOST, random_port)
             server.connect()
             tunnel = Tunnel(client, server)
-            tunnel.start_tunneling()
+            tunnel.tunnel()
