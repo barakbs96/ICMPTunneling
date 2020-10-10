@@ -31,7 +31,7 @@ class BasicTunnel(ITunnel):
         while True:
             try:
                 data_read = source.recv(MAX_CHUNK_SIZE)
-                if len(data) > 0:
+                if len(data_read) > 0:
                     destination.send(data_read)
                 else:
                     break

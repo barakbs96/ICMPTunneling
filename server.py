@@ -1,9 +1,9 @@
 from proxy.ICMPHTTPProxy import ICMPHTTPProxy
-from proxy.HTTPProxy import HTTPProxy
+from proxy.ht_proxy import HTProxy
 
 def main():
     proxy = ICMPHTTPProxy()
-    proxy.serve()
+    proxy.start_proxy()
 
 if __name__ == '__main__':
     main()
