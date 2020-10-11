@@ -1,4 +1,4 @@
-from proxy.ServerProxy import ServerProxy
+from proxy.server_proxy import ServerProxy
 
 def main():
     proxy = ServerProxy()
