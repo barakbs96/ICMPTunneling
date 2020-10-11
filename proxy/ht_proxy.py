@@ -5,10 +5,10 @@ import socket
 from proxy.iproxy import IProxy
 from network.ICMPSocket import ICMPSocket
 from tunnel.basic_tunnel import BasicTunnel
-from config.proxy.httpproxy import (HTTP_PROXY_HOST, HTTP_PROXY_PORT,
-                                    MAX_REQ_SIZE, HTTP_PROXY_CLIENT_QUEUE,
-                                    HTTP_CONNECT_METHOD, HTTP_HOST_HEADER,
-                                    HTTP_PROXY_CONNECT_MESSEGE)
+from config.proxy.httpproxy import (HTTP_PROXY_IP, HTTP_PROXY_PORT,
+                                    MAX_DATA_SIZE, MAX_CLIENTS_HTTP_PROXY,
+                                    CONNECT_HTTP_METHOD, HOST_HTTP_HEADER,
+                                    PROXY_CONNECT_HTTP_MESSEGE)
 
 
 class HTProxy(IProxy):
@@ -22,8 +22,8 @@ class HTProxy(IProxy):
 
         """
         listen_socket = socket.socket()
-        listen_socket.bind((HTTP_PROXY_HOST, HTTP_PROXY_PORT))
-        listen_socket.listen(HTTP_PROXY_CLIENT_QUEUE)
+        listen_socket.bind((HTTP_PROXY_IP, HTTP_PROXY_PORT))
+        listen_socket.listen(MAX_CLIENTS_HTTP_PROXY)
         return listen_socket
 
     def _get_host_data(self, request):
@@ -40,7 +40,7 @@ class HTProxy(IProxy):
         port = 80
         for line in request.split('\n'):
             headers = [x.strip().lower() for x in line.split(':')]
-            if headers[0] == HTTP_HOST_HEADER:
+            if headers[0] == HOST_HTTP_HEADER:
                 host = headers[1]
                 try:
                     port = int(headers[2])
@@ -55,14 +55,14 @@ class HTProxy(IProxy):
         Args:
             client (Socket): Client socket.
         """
-        data = client.recv(MAX_REQ_SIZE)
+        data = client.recv(MAX_DATA_SIZE)
         host, port = self._get_host_data(data)
         print host, port
         host_ip = socket.gethostbyname(host)
         tunnel_socket = socket.socket()
         tunnel_socket.connect((host_ip, port))
-        if data.startswith(HTTP_CONNECT_METHOD):
-            client.send(HTTP_PROXY_CONNECT_MESSEGE)
+        if data.startswith(CONNECT_HTTP_METHOD):
+            client.send(PROXY_CONNECT_HTTP_MESSEGE)
         else:
             tunnel_socket.send(data)
         BasicTunnel(client, tunnel_socket).tunnel()

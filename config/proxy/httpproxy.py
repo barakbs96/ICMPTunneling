@@ -1,10 +1,23 @@
-HTTP_PROXY_HOST = '192.168.1.110'
+"""
+HTTP Proxy Consts.
+
+Attributes:
+    CONNECT_HTTP_METHOD (str): HTTP connect string method.
+    HOST_HTTP_HEADER (str): HTTP host header string.
+    HTTP_PROXY_IP (str): IP address of HTTP proxy.
+    HTTP_PROXY_PORT (int): Port the HTTP proxy listen on.
+    MAX_CLIENTS_HTTP_PROXY (int): Max clients HTTP proxy will serve.
+    MAX_DATA_SIZE (int): Max of data size.
+    PROXY_CONNECT_HTTP_MESSEGE (str): HTTP connect message string.
+
+"""
+HTTP_PROXY_IP = '10.0.0.11'
 HTTP_PROXY_PORT = 12345
 
-HTTP_PROXY_CLIENT_QUEUE = 10
+MAX_CLIENTS_HTTP_PROXY = 10
 
-MAX_REQ_SIZE = 65535
+MAX_DATA_SIZE = 65535
 
-HTTP_CONNECT_METHOD = 'CONNECT'
-HTTP_HOST_HEADER = 'host'
-HTTP_PROXY_CONNECT_MESSEGE = 'HTTP/1.1 200 Connection Established\r\n\r\n'
+CONNECT_HTTP_METHOD = 'CONNECT'
+HOST_HTTP_HEADER = 'host'
+PROXY_CONNECT_HTTP_MESSEGE = 'HTTP/1.1 200 Connection Established\r\n\r\n'
