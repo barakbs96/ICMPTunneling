@@ -46,18 +46,22 @@ class ICMPSocket(ISocket):
     def accept(self):
         """Summary
         Listen for ICMP connect packets. When ICMP connect packet is found, listen for further packets from this IP. 
+<<<<<<< Updated upstream
         Send connect ACK packet.
+=======
+        Send connect ACK 
+>>>>>>> Stashed changes
         Returns:
             tuple (client_socket, (ip,port)): Return tuple containg client socket and ip, port information. 
         """
         icmp_packet = sniff(filter=ICMP_CONNECT_FILTER, count=1)[0]
-        ip = icmp_packet[IP].src
-        port = icmp_packet[ICMP].fields[ICMP_PORT_FIELD]
-        client_socket = self.__class__(ip, port)
+        icmp_packet_ip = icmp_packet[IP].src
+        icmp_packet_port = icmp_packet[ICMP].fields[ICMP_PORT_FIELD]
+        client_socket = self.__class__(icmp_packet_ip, icmp_packet_port)
         client_socket._set_as_server()
-        icmp_connect_ack_packet = IP(dst=ip) / ICMP(code=ICMP_CONNECT_ACK_MESSEGE_CODE, seq=port, type=ICMP_SERVER_ID)
+        icmp_connect_ack_packet = IP(dst=icmp_packet_ip) / ICMP(code=ICMP_CONNECT_ACK_MESSEGE_CODE, seq=icmp_packet_port, type=ICMP_SERVER_ID)
         send(icmp_connect_ack_packet, verbose=False)
-        return (client_socket, (ip, port))
+        return (client_socket, (icmp_packet_ip, icmp_packet_port))
 
     def connect(self):
         """Summary
