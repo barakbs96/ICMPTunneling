@@ -4,9 +4,9 @@ from scapy.all import *
 
 from network.ISocket import ISocket
 from config.network.icmp import ICMP_CONNECT_MESSEGE_CODE, ICMP_PORT_FIELD, ICMP_CONNECT_FILTER, ICMP_DATA_FILTER, \
-    ICMP_DATA_MESSEGE_CODE, ICMP_CONNECT_ACK_FILTER, ICMP_CONNECT_ACK_MESSEGE_CODE, ICMP_CLIENT_ID, ICMP_SERVER_ID, \
-    ICMP_SOCKET_SNIFF_TIMEOUT, ICMP_FRAGMENTED_DATA_MESSEGE_CODE, ICMP_FRAGMENTED_DATA_DONE_MESSEGE_CODE, \
-    MAX_ICMP_MESSAGE_SIZE
+    ICMP_DATA_TYPE_CODE, ICMP_CONNECT_ACK_FILTER, ICMP_CONNECT_ACK_MESSEGE_CODE, ICMP_CLIENT_ID, ICMP_SERVER_ID, \
+    ICMP_SOCKET_SNIFF_TIMEOUT, ICMP_FRAGMENTED_DATA_TYPE_CODE, ICMP_FRAGMENTED_DATA_FINISH_TYPE_CODE, \
+    MAX_ICMP_MESSAGE_LEN
 
 
 class ICMPSocket(ISocket):
@@ -98,16 +98,16 @@ class ICMPSocket(ISocket):
         """
         while len(self._buffer) == 0:
             pass
-        icmp_data = self._buffer.pop()
-        if icmp_data[1] == ICMP_DATA_MESSEGE_CODE:
-            return icmp_data[0]
-        elif icmp_data[1] == ICMP_FRAGMENTED_DATA_MESSEGE_CODE:
+        icmp_packet = self._buffer.pop()
+        if icmp_packet[1] == ICMP_DATA_TYPE_CODE:
+            return icmp_packet[0]
+        elif icmp_packet[1] == ICMP_FRAGMENTED_DATA_TYPE_CODE:
             data = ''
-            while icmp_data[1] != ICMP_FRAGMENTED_DATA_DONE_MESSEGE_CODE:
-                data += icmp_data[0]
+            while icmp_packet[1] != ICMP_FRAGMENTED_DATA_FINISH_TYPE_CODE:
+                data += icmp_packet[0]
                 while len(self._buffer) == 0:
                     pass
-                icmp_data = self._buffer.pop()
+                icmp_packet = self._buffer.pop()
             return data
 
     def send(self, data):
@@ -119,18 +119,18 @@ class ICMPSocket(ISocket):
         Returns:
             TYPE: Description
         """
-        # no need for fregmentation. data size is less then MAX_ICMP_MESSAGE_SIZE
-        if len(data) <= MAX_ICMP_MESSAGE_SIZE:
-            icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_DATA_MESSEGE_CODE, seq=self._port, type=self._id) / data
+        # no need for fregmentation. data size is less then MAX_ICMP_MESSAGE_LEN
+        if len(data) <= MAX_ICMP_MESSAGE_LEN:
+            icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_DATA_TYPE_CODE, seq=self._port, type=self._id) / data
             send(icmp_packet, verbose=False)
             return
         # fregmentation packet
-        for i in xrange(len(data) / MAX_ICMP_MESSAGE_SIZE + 1):
-            data_part = data[MAX_ICMP_MESSAGE_SIZE * i:MAX_ICMP_MESSAGE_SIZE * (i + 1)]
-            icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_MESSEGE_CODE, seq=self._port,
+        for i in xrange(len(data) / MAX_ICMP_MESSAGE_LEN + 1):
+            data_part = data[MAX_ICMP_MESSAGE_LEN * i:MAX_ICMP_MESSAGE_LEN * (i + 1)]
+            icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_TYPE_CODE, seq=self._port,
                                                   type=self._id) / data_part
             send(icmp_packet, verbose=False)
         # send done fregment message code type
-        icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_DONE_MESSEGE_CODE, seq=self._port,
+        icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_FINISH_TYPE_CODE, seq=self._port,
                                               type=self._id) / 'abcd'
         send(icmp_packet, verbose=False)
