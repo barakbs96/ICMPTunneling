@@ -3,19 +3,17 @@
 from scapy.all import *
 
 from network.ISocket import ISocket
-from config.network.icmp import ICMP_CONNECT_MESSEGE_CODE, ICMP_PORT_FIELD, ICMP_CONNECT_FILTER, ICMP_DATA_FILTER,\
-    ICMP_DATA_MESSEGE_CODE, ICMP_CONNECT_ACK_FILTER, ICMP_CONNECT_ACK_MESSEGE_CODE, ICMP_CLIENT_ID, ICMP_SERVER_ID,\
-    ICMP_SOCKET_SNIFF_TIMEOUT, ICMP_FRAGMENTED_DATA_MESSEGE_CODE, ICMP_FRAGMENTED_DATA_DONE_MESSEGE_CODE,\
+from config.network.icmp import ICMP_CONNECT_MESSEGE_CODE, ICMP_PORT_FIELD, ICMP_CONNECT_FILTER, ICMP_DATA_FILTER, \
+    ICMP_DATA_MESSEGE_CODE, ICMP_CONNECT_ACK_FILTER, ICMP_CONNECT_ACK_MESSEGE_CODE, ICMP_CLIENT_ID, ICMP_SERVER_ID, \
+    ICMP_SOCKET_SNIFF_TIMEOUT, ICMP_FRAGMENTED_DATA_MESSEGE_CODE, ICMP_FRAGMENTED_DATA_DONE_MESSEGE_CODE, \
     MAX_ICMP_MESSAGE_SIZE
 
 
 class ICMPSocket(ISocket):
-
     """Summary
-    ICMP socket. 
-
+    ICMP socket.
     """
-    
+
     def __init__(self, ip='', port=0):
         """Summary
         
@@ -43,34 +41,33 @@ class ICMPSocket(ISocket):
         """
         pass
 
-    def accept(self):
-        """Summary
-        Listen for ICMP connect packets. When ICMP connect packet is found, listen for further packets from this IP. 
-<<<<<<< Updated upstream
-        Send connect ACK packet.
-=======
-        Send connect ACK 
->>>>>>> Stashed changes
-        Returns:
-            tuple (client_socket, (ip,port)): Return tuple containg client socket and ip, port information. 
-        """
-        icmp_packet = sniff(filter=ICMP_CONNECT_FILTER, count=1)[0]
-        icmp_packet_ip = icmp_packet[IP].src
-        icmp_packet_port = icmp_packet[ICMP].fields[ICMP_PORT_FIELD]
-        client_socket = self.__class__(icmp_packet_ip, icmp_packet_port)
-        client_socket._set_as_server()
-        icmp_connect_ack_packet = IP(dst=icmp_packet_ip) / ICMP(code=ICMP_CONNECT_ACK_MESSEGE_CODE, seq=icmp_packet_port, type=ICMP_SERVER_ID)
-        send(icmp_connect_ack_packet, verbose=False)
-        return (client_socket, (icmp_packet_ip, icmp_packet_port))
+    # def accept(self):
+    #     """Summary
+    #     Listen for ICMP connect packets. When ICMP connect packet is found, listen for further packets from this IP.
+    #     Send connect ACK packet.
+    #     Send connect ACK
+    #     Returns:
+    #         tuple (client_socket, (ip,port)): Return tuple containg client socket and ip, port information.
+    #     """
+    #     icmp_packet = sniff(filter=ICMP_CONNECT_FILTER, count=1)[0]
+    #     icmp_packet_ip = icmp_packet[IP].src
+    #     icmp_packet_port = icmp_packet[ICMP].fields[ICMP_PORT_FIELD]
+    #     client_socket = self.__class__(icmp_packet_ip, icmp_packet_port)
+    #     client_socket._set_as_server()
+    #     icmp_connect_ack_packet = IP(dst=icmp_packet_ip) / ICMP(code=ICMP_CONNECT_ACK_MESSEGE_CODE, seq=icmp_packet_port, type=ICMP_SERVER_ID)
+    #     send(icmp_connect_ack_packet, verbose=False)
+    #     return (client_socket, (icmp_packet_ip, icmp_packet_port))
 
     def connect(self):
         """Summary
         
         """
-        icmp_connect_packet = IP(dst=self._ip)/ICMP(code=ICMP_CONNECT_MESSEGE_CODE, seq=self._port, type=self._id)
+        icmp_connect_packet = IP(dst=self._ip) / ICMP(code=ICMP_CONNECT_MESSEGE_CODE, seq=self._port, type=self._id)
         send(icmp_connect_packet, verbose=False)
         try:
-            sniff(filter=ICMP_CONNECT_ACK_FILTER, lfilter=lambda x: x[ICMP].seq == self._port and x[ICMP].type == self._response_id, count=1, timeout=ICMP_SOCKET_SNIFF_TIMEOUT)[0]
+            sniff(filter=ICMP_CONNECT_ACK_FILTER,
+                  lfilter=lambda x: x[ICMP].seq == self._port and x[ICMP].type == self._response_id, count=1,
+                  timeout=ICMP_SOCKET_SNIFF_TIMEOUT)[0]
         except Exception as e:
             pass
         t = threading.Thread(target=self._recv_packets, args=(self._buffer,))
@@ -85,10 +82,10 @@ class ICMPSocket(ISocket):
         while True:
             try:
                 sniff(filter=ICMP_DATA_FILTER,
-                      lfilter=lambda x: x[ICMP].seq == self._port and x[ICMP].type == self._response_id, prn=lambda x:buffer.append((x[ICMP].load, x[ICMP].code)))
+                      lfilter=lambda x: x[ICMP].seq == self._port and x[ICMP].type == self._response_id,
+                      prn=lambda x: buffer.append((x[ICMP].load, x[ICMP].code)))
             except Exception as e:
                 pass
-
 
     def recv(self, amount=0):
         """Summary
@@ -115,7 +112,7 @@ class ICMPSocket(ISocket):
 
     def send(self, data):
         """Summary 
-        Encapsolate IP traffic in ICMP echo packets and send them to our own proxy server. 
+        Encapsulate  IP traffic in ICMP echo packets and send them to our own proxy server.
         Args:
             data (TYPE): Description
         
@@ -124,13 +121,14 @@ class ICMPSocket(ISocket):
         """
         # no need for fregmentation. data size is less then MAX_ICMP_MESSAGE_SIZE
         if len(data) <= MAX_ICMP_MESSAGE_SIZE:
-            icmp_packet = IP(dst=self._ip)/ICMP(code=ICMP_DATA_MESSEGE_CODE, seq=self._port, type=self._id)/data
+            icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_DATA_MESSEGE_CODE, seq=self._port, type=self._id) / data
             send(icmp_packet, verbose=False)
             return
         # fregmentation packet
-        for i in xrange(len(data)/MAX_ICMP_MESSAGE_SIZE+1):
-            data_part = data[MAX_ICMP_MESSAGE_SIZE*i:MAX_ICMP_MESSAGE_SIZE*(i+1)]
-            icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_MESSEGE_CODE, seq=self._port, type=self._id)/data_part
+        for i in xrange(len(data) / MAX_ICMP_MESSAGE_SIZE + 1):
+            data_part = data[MAX_ICMP_MESSAGE_SIZE * i:MAX_ICMP_MESSAGE_SIZE * (i + 1)]
+            icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_MESSEGE_CODE, seq=self._port,
+                                                  type=self._id) / data_part
             send(icmp_packet, verbose=False)
         # send done fregment message code type
         icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_DONE_MESSEGE_CODE, seq=self._port,
