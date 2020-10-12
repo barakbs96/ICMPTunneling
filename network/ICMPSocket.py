@@ -126,9 +126,9 @@ class ICMPSocket(ISocket):
             return
         # fregmentation packet
         for i in xrange(len(data) / MAX_ICMP_MESSAGE_LEN + 1):
-            data_part = data[MAX_ICMP_MESSAGE_LEN * i:MAX_ICMP_MESSAGE_LEN * (i + 1)]
+            data_to_encapsulate = data[MAX_ICMP_MESSAGE_LEN * i:MAX_ICMP_MESSAGE_LEN * (i + 1)]
             icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_TYPE_CODE, seq=self._port,
-                                                  type=self._id) / data_part
+                                                  type=self._id) / data_to_encapsulate
             send(icmp_packet, verbose=False)
         # send done fregment message code type
         icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_FINISH_TYPE_CODE, seq=self._port,
