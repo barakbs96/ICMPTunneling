@@ -45,7 +45,8 @@ class ICMPSocket(ISocket):
 
     def accept(self):
         """Summary
-        
+        Listen for ICMP connect packets. When ICMP connect packet is found, listen for further packets from this IP. 
+        Send connect ACK packet.
         Returns:
             tuple (client_socket, (ip,port)): Return tuple containg client socket and ip, port information. 
         """
@@ -75,7 +76,7 @@ class ICMPSocket(ISocket):
         """Summary
         Listen for icmp packets. received ICMP packets are stroed into buffer.
         Args:
-            buffer (TYPE): Write received ICMP packets to buffer.
+            buffer (TYPE): Write received ICMP packets toח buffer.
         """
         while True:
             try:
