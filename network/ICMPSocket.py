@@ -98,16 +98,16 @@ class ICMPSocket(ISocket):
         """
         while len(self._buffer) == 0:
             pass
-        icmp_packet = self._buffer.pop()
-        if icmp_packet[1] == ICMP_DATA_TYPE_CODE:
-            return icmp_packet[0]
-        elif icmp_packet[1] == ICMP_FRAGMENTED_DATA_TYPE_CODE:
+        received_icmp_packet = self._buffer.pop()
+        if received_icmp_packet[1] == ICMP_DATA_TYPE_CODE:
+            return received_icmp_packet[0]
+        elif received_icmp_packet[1] == ICMP_FRAGMENTED_DATA_TYPE_CODE:
             data = ''
-            while icmp_packet[1] != ICMP_FRAGMENTED_DATA_FINISH_TYPE_CODE:
-                data += icmp_packet[0]
+            while received_icmp_packet[1] != ICMP_FRAGMENTED_DATA_FINISH_TYPE_CODE:
+                data += received_icmp_packet[0]
                 while len(self._buffer) == 0:
                     pass
-                icmp_packet = self._buffer.pop()
+                received_icmp_packet = self._buffer.pop()
             return data
 
     def send(self, data):
@@ -121,16 +121,16 @@ class ICMPSocket(ISocket):
         """
         # no need for fregmentation. data size is less then MAX_ICMP_MESSAGE_LEN
         if len(data) <= MAX_ICMP_MESSAGE_LEN:
-            icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_DATA_TYPE_CODE, seq=self._port, type=self._id) / data
-            send(icmp_packet, verbose=False)
+            icmp_packet_to_send = IP(dst=self._ip) / ICMP(code=ICMP_DATA_TYPE_CODE, seq=self._port, type=self._id) / data
+            send(icmp_packet_to_send, verbose=False)
             return
         # fregmentation packet
         for i in xrange(len(data) / MAX_ICMP_MESSAGE_LEN + 1):
             data_to_encapsulate = data[MAX_ICMP_MESSAGE_LEN * i:MAX_ICMP_MESSAGE_LEN * (i + 1)]
-            icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_TYPE_CODE, seq=self._port,
+            icmp_packet_to_send = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_TYPE_CODE, seq=self._port,
                                                   type=self._id) / data_to_encapsulate
-            send(icmp_packet, verbose=False)
+            send(icmp_packet_to_send, verbose=False)
         # send done fregment message code type
-        icmp_packet = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_FINISH_TYPE_CODE, seq=self._port,
+        icmp_packet_to_send = IP(dst=self._ip) / ICMP(code=ICMP_FRAGMENTED_DATA_FINISH_TYPE_CODE, seq=self._port,
                                               type=self._id) / 'abcd'
-        send(icmp_packet, verbose=False)
+        send(icmp_packet_to_send, verbose=False)
