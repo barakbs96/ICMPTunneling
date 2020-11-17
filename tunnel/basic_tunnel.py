@@ -5,7 +5,7 @@ import traceback
 import threading
 
 from tunnel.ITunnel import ITunnel
-from config.tunnel.network import MAX_CHUNK_SIZE
+from config.tunnel.tunnel import MAX_CHUNK_SIZE
 
 
 class BasicTunnel(ITunnel):

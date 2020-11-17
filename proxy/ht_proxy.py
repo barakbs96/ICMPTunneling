@@ -3,12 +3,12 @@ import threading
 import socket
 
 from proxy.iproxy import IProxy
-from network.ICMPSocket import ICMPSocket
+from network.icmp_socket import ICMPSocket
 from tunnel.basic_tunnel import BasicTunnel
-from config.proxy.httpproxy import (HTTP_PROXY_IP, HTTP_PROXY_PORT,
-                                    MAX_DATA_SIZE, MAX_CLIENTS_HTTP_PROXY,
-                                    CONNECT_HTTP_METHOD, HOST_HTTP_HEADER,
-                                    PROXY_CONNECT_HTTP_MESSEGE)
+from config.proxy.http import (HTTP_PROXY_IP, HTTP_PROXY_PORT,
+                               MAX_DATA_SIZE, MAX_CLIENTS_HTTP_PROXY,
+                               CONNECT_HTTP_METHOD, HOST_HTTP_HEADER,
+                               PROXY_CONNECT_HTTP_MESSEGE)
 
 
 class HTProxy(IProxy):

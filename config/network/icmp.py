@@ -1,20 +1,39 @@
-ICMP_MESSAGE_PORT = 'port'
-ICMP_MESSAGE_DATA = 'data'
-ICMP_MESSAGE_MAGIC = 'ICMPTUNNELING'
+"""ICMP consts.
 
-ICMP_PORT_FIELD = 'seq'
-ICMP_CONNECT_MESSEGE_CODE = 250
-ICMP_CONNECT_ACK_MESSEGE_CODE = 251
-ICMP_DATA_MESSEGE_CODE = 252
-ICMP_FRAGMENTED_DATA_MESSEGE_CODE = 253
-ICMP_FRAGMENTED_DATA_DONE_MESSEGE_CODE = 254
+Attributes:
+    BPF_CONNECT (TYPE): BFF filter for connect message sniffing.
+    BPF_CONNECT_ACK (TYPE): BFF filter for conncect ack message sniffing.
+    BPF_DATA (TYPE): BFF filte for data icmp packet sniffing.
+    CHUNK_END_MAGIC (str): String represents end of data chunks.
+    CLIENT_MAGIC (int): String identifies client.
+    CODE_MESSAGE_CONNECT (int): code message for connect method.
+    CODE_MESSAGE_CONNECT_ACK (int): code message for connect ack method.
+    CODE_MESSAGE_DATA_CHUNK (int): code message for data chunk method.
+    CODE_MESSAGE_DATA_CHUNK_END (int): code message for chunk end method.
+    CODE_MESSAGE_ICMP_DATA (int): code message for data method.
+    INDEX_PORT (str): Index of port in icmp packet.
+    MESSAGE_MAX_SIZE (int): Max size of data in icmp packet.
+    SERVER_MAGIC (int): String represents server.
+    TIMEOUT_SNIFF (int): Timeout for sniffing one packet.
 
-ICMP_CLIENT_ID = 8
-ICMP_SERVER_ID = 0
+"""
+CLIENT_MAGIC = 8
+SERVER_MAGIC = 0
 
-ICMP_SOCKET_SNIFF_TIMEOUT = 15
-MAX_ICMP_MESSAGE_SIZE = 1024
+TIMEOUT_SNIFF = 15
+MESSAGE_MAX_SIZE = 1024
 
-ICMP_CONNECT_FILTER = 'icmp[icmpcode]=={0}'.format(str(ICMP_CONNECT_MESSEGE_CODE))
-ICMP_CONNECT_ACK_FILTER = 'icmp[icmpcode]=={0}'.format(str(ICMP_CONNECT_ACK_MESSEGE_CODE))
-ICMP_DATA_FILTER = 'icmp[icmpcode]=={0} or icmp[icmpcode]=={1} or icmp[icmpcode]=={2}'.format(str(ICMP_DATA_MESSEGE_CODE), str(ICMP_FRAGMENTED_DATA_MESSEGE_CODE), str(ICMP_FRAGMENTED_DATA_DONE_MESSEGE_CODE))
+INDEX_PORT = 'seq'
+CODE_MESSAGE_CONNECT = 100
+CODE_MESSAGE_CONNECT_ACK = 101
+CODE_MESSAGE_ICMP_DATA = 102
+CODE_MESSAGE_DATA_CHUNK = 103
+CODE_MESSAGE_DATA_CHUNK_END = 104
+CHUNK_END_MAGIC = 'xxxx'
+
+BPF_CONNECT = 'icmp[icmpcode]=={0}'.format(str(CODE_MESSAGE_CONNECT))
+BPF_CONNECT_ACK = 'icmp[icmpcode]=={0}'.format(str(CODE_MESSAGE_CONNECT_ACK))
+BPF_DATA = 'icmp[icmpcode]=={0} or icmp[icmpcode]=={1} or icmp[icmpcode]=={2}'\
+    .format(str(CODE_MESSAGE_ICMP_DATA),
+            str(CODE_MESSAGE_DATA_CHUNK),
+            str(CODE_MESSAGE_DATA_CHUNK_END))

@@ -1,6 +1,6 @@
 """Class ICMPHTProxy."""
 from proxy.ht_proxy import HTProxy
-from network.SecureICMPSocket import SecureICMPSocket
+from network.secure_icmp_socket import SecureICMPSocket
 
 
 class ICMPHTProxy(HTProxy):

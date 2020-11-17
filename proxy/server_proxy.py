@@ -2,13 +2,13 @@
 import socket
 import random
 
-from network.SecureICMPSocket import SecureICMPSocket
-from network.ICMPSocket import ICMPSocket
+from network.secure_icmp_socket import SecureICMPSocket
+from network.icmp_socket import ICMPSocket
 from proxy.iproxy import IProxy
 from tunnel.basic_tunnel import BasicTunnel
-from config.proxy.httpproxy import (HTTP_PROXY_IP, HTTP_PROXY_PORT,
-                                    MAX_CLIENTS_HTTP_PROXY)
-from config.proxy.serverproxy import SERVER_PROXY_IP, SERVER_PROXY_PORT
+from config.proxy.http import (HTTP_PROXY_IP, HTTP_PROXY_PORT,
+                               MAX_CLIENTS_HTTP_PROXY)
+from config.proxy.server import SERVER_PROXY_IP, SERVER_PROXY_PORT
 
 
 class ServerProxy(IProxy):
