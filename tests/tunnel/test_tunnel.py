@@ -1,15 +1,12 @@
+"""Test tunnel."""
 import pytest
 import socket
 import threading
 from tunnel.basic_tunnel import BasicTunnel
 
-# def test_bla():
-#     print 'bla'
-#     assert 1 == 1
-
 
 def test_tunnel_both_ways():
-    print 'bla'
+    """Test basic tunnel."""
     server_socket = socket.socket()
     ip = '127.0.0.1'
     port = 7859

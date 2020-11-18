@@ -1,0 +1,89 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module network.secure_icmp_socket</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="network.html"><font color="#ffffff">network</font></a>.secure_icmp_socket</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:///C:/git/icmptunneling/network/secure_icmp_socket.py">c:\git\icmptunneling\network\secure_icmp_socket.py</a></font></td></tr></table>
+    <p><tt>Class&nbsp;SecureICMPSocke.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="network.icmp_socket.html#ICMPSocket">network.icmp_socket.ICMPSocket</a>(<a href="network.isocket.html#ISocket">network.isocket.ISocket</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="network.secure_icmp_socket.html#SecureICMPSocket">SecureICMPSocket</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SecureICMPSocket">class <strong>SecureICMPSocket</strong></a>(<a href="network.icmp_socket.html#ICMPSocket">network.icmp_socket.ICMPSocket</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Secure&nbsp;socket&nbsp;object&nbsp;using&nbsp;icmp&nbsp;packets.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="network.secure_icmp_socket.html#SecureICMPSocket">SecureICMPSocket</a></dd>
+<dd><a href="network.icmp_socket.html#ICMPSocket">network.icmp_socket.ICMPSocket</a></dd>
+<dd><a href="network.isocket.html#ISocket">network.isocket.ISocket</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SecureICMPSocket-__init__"><strong>__init__</strong></a>(self, ip<font color="#909090">=''</font>, port<font color="#909090">=0</font>)</dt><dd><tt>Initialize&nbsp;socket&nbsp;ip&nbsp;and&nbsp;port.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;(str,&nbsp;optional):&nbsp;IP&nbsp;address&nbsp;which&nbsp;the&nbsp;socket&nbsp;will&nbsp;connect&nbsp;to&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;listen&nbsp;on.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;port&nbsp;(int,&nbsp;optional):&nbsp;Port&nbsp;number&nbsp;which&nbsp;the&nbsp;socket&nbsp;will&nbsp;connect&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;listen&nbsp;on.</tt></dd></dl>
+
+<dl><dt><a name="SecureICMPSocket-recv"><strong>recv</strong></a>(self, bufsize<font color="#909090">=0</font>)</dt><dd><tt>Recieve&nbsp;data&nbsp;over&nbsp;icmp&nbsp;packet&nbsp;and&nbsp;decrypt&nbsp;it.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bufsize&nbsp;(int):&nbsp;The&nbsp;maximum&nbsp;amount&nbsp;of&nbsp;data&nbsp;to&nbsp;be&nbsp;received&nbsp;at&nbsp;once.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;string:&nbsp;Decrypted&nbsp;received&nbsp;data.</tt></dd></dl>
+
+<dl><dt><a name="SecureICMPSocket-send"><strong>send</strong></a>(self, data)</dt><dd><tt>Encrypt&nbsp;data&nbsp;and&nbsp;send&nbsp;over&nbsp;<a href="network.icmp_socket.html#ICMPSocket">ICMPSocket</a>.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;(string):&nbsp;Data&nbsp;to&nbsp;send.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="network.icmp_socket.html#ICMPSocket">network.icmp_socket.ICMPSocket</a>:<br>
+<dl><dt><a name="SecureICMPSocket-accept"><strong>accept</strong></a>(self)</dt><dd><tt>Wait&nbsp;for&nbsp;icmp&nbsp;connect&nbsp;packet.<br>
+&nbsp;<br>
+when&nbsp;one&nbsp;arrived,&nbsp;create&nbsp;a&nbsp;connection&nbsp;using&nbsp;<a href="network.icmp_socket.html#ICMPSocket">ICMPSocket</a>.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;connection&nbsp;tuple:&nbsp;tuple&nbsp;contains&nbsp;client&nbsp;socket&nbsp;and&nbsp;client&nbsp;details.</tt></dd></dl>
+
+<dl><dt><a name="SecureICMPSocket-bind"><strong>bind</strong></a>(self)</dt><dd><tt>Bind&nbsp;the&nbsp;socket&nbsp;to&nbsp;address.</tt></dd></dl>
+
+<dl><dt><a name="SecureICMPSocket-connect"><strong>connect</strong></a>(self)</dt><dd><tt>Will&nbsp;send&nbsp;icmp&nbsp;connect&nbsp;packet&nbsp;and&nbsp;snif&nbsp;for&nbsp;icmp&nbsp;ack&nbsp;message.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="network.isocket.html#ISocket">network.isocket.ISocket</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

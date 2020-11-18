@@ -1,0 +1,51 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module config.network.icmp</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="config.html"><font color="#ffffff">config</font></a>.<a href="config.network.html"><font color="#ffffff">network</font></a>.icmp</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:///C:/git/icmptunneling/config/network/icmp.py">c:\git\icmptunneling\config\network\icmp.py</a></font></td></tr></table>
+    <p><tt>ICMP&nbsp;consts.<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;BPF_CONNECT&nbsp;(TYPE):&nbsp;BFF&nbsp;filter&nbsp;for&nbsp;connect&nbsp;message&nbsp;sniffing.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;BPF_CONNECT_ACK&nbsp;(TYPE):&nbsp;BFF&nbsp;filter&nbsp;for&nbsp;conncect&nbsp;ack&nbsp;message&nbsp;sniffing.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;BPF_DATA&nbsp;(TYPE):&nbsp;BFF&nbsp;filte&nbsp;for&nbsp;data&nbsp;icmp&nbsp;packet&nbsp;sniffing.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CHUNK_END_MAGIC&nbsp;(str):&nbsp;String&nbsp;represents&nbsp;end&nbsp;of&nbsp;data&nbsp;chunks.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CLIENT_MAGIC&nbsp;(int):&nbsp;String&nbsp;identifies&nbsp;client.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CODE_MESSAGE_CONNECT&nbsp;(int):&nbsp;code&nbsp;message&nbsp;for&nbsp;connect&nbsp;method.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CODE_MESSAGE_CONNECT_ACK&nbsp;(int):&nbsp;code&nbsp;message&nbsp;for&nbsp;connect&nbsp;ack&nbsp;method.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CODE_MESSAGE_DATA_CHUNK&nbsp;(int):&nbsp;code&nbsp;message&nbsp;for&nbsp;data&nbsp;chunk&nbsp;method.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CODE_MESSAGE_DATA_CHUNK_END&nbsp;(int):&nbsp;code&nbsp;message&nbsp;for&nbsp;chunk&nbsp;end&nbsp;method.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CODE_MESSAGE_ICMP_DATA&nbsp;(int):&nbsp;code&nbsp;message&nbsp;for&nbsp;data&nbsp;method.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;INDEX_PORT&nbsp;(str):&nbsp;Index&nbsp;of&nbsp;port&nbsp;in&nbsp;icmp&nbsp;packet.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE_MAX_SIZE&nbsp;(int):&nbsp;Max&nbsp;size&nbsp;of&nbsp;data&nbsp;in&nbsp;icmp&nbsp;packet.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SERVER_MAGIC&nbsp;(int):&nbsp;String&nbsp;represents&nbsp;server.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;TIMEOUT_SNIFF&nbsp;(int):&nbsp;Timeout&nbsp;for&nbsp;sniffing&nbsp;one&nbsp;packet.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>BPF_CONNECT</strong> = 'icmp[icmpcode]==100'<br>
+<strong>BPF_CONNECT_ACK</strong> = 'icmp[icmpcode]==101'<br>
+<strong>BPF_DATA</strong> = 'icmp[icmpcode]==102 or icmp[icmpcode]==103 or icmp[icmpcode]==104'<br>
+<strong>CHUNK_END_MAGIC</strong> = 'xxxx'<br>
+<strong>CLIENT_MAGIC</strong> = 8<br>
+<strong>CODE_MESSAGE_CONNECT</strong> = 100<br>
+<strong>CODE_MESSAGE_CONNECT_ACK</strong> = 101<br>
+<strong>CODE_MESSAGE_DATA_CHUNK</strong> = 103<br>
+<strong>CODE_MESSAGE_DATA_CHUNK_END</strong> = 104<br>
+<strong>CODE_MESSAGE_ICMP_DATA</strong> = 102<br>
+<strong>INDEX_PORT</strong> = 'seq'<br>
+<strong>MESSAGE_MAX_SIZE</strong> = 1024<br>
+<strong>SERVER_MAGIC</strong> = 0<br>
+<strong>TIMEOUT_SNIFF</strong> = 15</td></tr></table>
+</body></html>

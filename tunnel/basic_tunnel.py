@@ -4,7 +4,7 @@ import socket
 import traceback
 import threading
 
-from tunnel.ITunnel import ITunnel
+from tunnel.itunnel import ITunnel
 from config.tunnel.tunnel import MAX_CHUNK_SIZE
 
 
